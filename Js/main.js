@@ -1,4 +1,9 @@
 
+
+
+
+
+/* 
 let alumnos = [];
 let profesores = [];
 
@@ -152,3 +157,4 @@ while (true){
 }
 
 
+ */
