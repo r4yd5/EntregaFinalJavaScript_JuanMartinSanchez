@@ -19,6 +19,7 @@ div_prueba.innerHTML += `
 		<h5 class="card-title">Curso de ${e['nombre']}</h5>
 		<button id="boton" class="btn btn-primary botones_inscribirse">Inscribirse</button>
 	</div>
+	
 `
 }
 )
