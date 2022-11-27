@@ -7,47 +7,10 @@ class Profesor {
         this.dni = dni;
         this.curso = curso;
     }
-
-    cargar_notas(v1) {
-        if (v1.length !== 0) {
-            v1.forEach(i => {
-                alert(`Alumno: ${i['nombre_apellido']}. Ingrese sus notas.`)
-                i['nota_1'] = parseFloat(prompt('Primer parcial: '))
-                i['nota_2'] = parseFloat(prompt('Segundo parcial: '))
-                i['nota_final'] = parseFloat(prompt('Final: '))
-            });
-        } else {
-            alert('No hay alumnos en el sistema aun.')
-        }
-    }
-
-    ver_notas_globales(v1) {
-        if (v1.length !== 0) {
-            v1.forEach(i => {
-                alert(`Alumno: ${i['nombre_apellido']}. Parcial 1: ${i['nota_1']}. Parcial 2: ${i['nota_2']}. Final: ${i['nota_final']}`)
-            });
-        } else {
-            alert('No hay alumnos en el sistema aun.')
-        }
-    }
-
-    ver_promedio_curso(v1) {
-        if (v1.length !== 0) {
-            let acum = 0
-            let prom = 0
-            v1.forEach(i => {
-                acum += (i['nota_1'] + i['nota_2'] + i['nota_final']) / 3
-            });
-            prom = acum / v1.length
-            alert(`El promedio general del curso es: ${prom}`)
-        } else {
-            alert('No hay alumnos en el sistema aun.')
-        }
-    }
-
 }
 
 let estudiantes = [];
+
 const profesores = [
     new Profesor('Maury', 'Wadforth', 'profesor1@gmail.com', 'pdYjWc', 11111111, 'JavaScript'),
     new Profesor('Evelyn', 'Maddock', 'profesor2@gmail.com', '1Uy7shv6', 22222222, 'Python'),
@@ -57,7 +20,9 @@ const profesores = [
     new Profesor('Sherm', 'Terne', 'profesor6@gmail.com', 'NkE3fn59LuQn', 66666666, 'React'),
     new Profesor('Nolana', 'MacRedmond', 'profesor7@gmail.com', 'aSnxjgc', 77777777, 'NodeJs'),
 ];
+
 localStorage.setItem('profesores', JSON.stringify(profesores))
+
 const cursos = [
     { 'nombre': 'JavaScript', 'img': 'https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png' },
     { 'nombre': 'Python', 'img': 'https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/9d2e8896750899.5eb54f3381452.png' },
@@ -72,6 +37,7 @@ const div_principal = document.querySelector('#div_principal')
 const recargar_pagina = () => location.reload()
 
 const iniciar_sesion = (array, email, password, usuario) => {
+    let flag = false
 
     for (let i of array) {
         if (i['email'] == email && i['password'] == password) {
@@ -83,9 +49,12 @@ const iniciar_sesion = (array, email, password, usuario) => {
         }
 
     }
-        flag == false ? alert('Usuario no encontrado.') : 
+
+    flag == false ? alert('Usuario no encontrado.') :
         alert('Inicio de sesion valido.')
-        recargar_pagina()
+    recargar_pagina()
+
+
 }
 
 function volver_al_inicio(boton, div) {
@@ -124,7 +93,6 @@ const apartado_cursos = (estudiante_iniciado) => {
         const boton_volver_inicio = document.querySelector('#boton_volver_inicio')
         volver_al_inicio(boton_volver_inicio, div_principal)
         const botones = document.querySelectorAll(".botones_inscribirse");
-        console.log(botones)
 
         for (let i = 0; i < botones.length; i++) {
             botones[i].onclick = () => {
@@ -136,7 +104,7 @@ const apartado_cursos = (estudiante_iniciado) => {
                         alert('Ya te has inscripto a ese curso.')
 
                     } else {
-                        
+
                         estudiantes = JSON.parse(localStorage.getItem('estudiantes'))
                         for (let e = 0; e < estudiantes.length; e++) {
                             if (estudiantes[e]['email'] == estudiante_iniciado['email']) {
@@ -192,16 +160,13 @@ const apartado_estudiantes_logueados = (estudiante_iniciado) => {
             div_principal.innerHTML = ''
             estudiante_iniciado.cursos_inscriptos.forEach(e => {
                 div_principal.innerHTML +=
-                `<h3>${e['nombre']}</h3>   
+                    `<h3>${e['nombre']}</h3>   
                 <ul>
-                    <li><p>Nota 1: ${e['nota1'] || 'La nota aun no ha sido cargada.'}</li>
-                    <li><p>Nota 2: ${e['nota2'] || 'La nota aun no ha sido cargada.'}</li>
-                    <li><p>Nota Final: ${e['nota3'] || 'La nota aun no ha sido cargada.'}</li>
-                    <li><p>Nota Final (promedio): ${e['promedio'] || 'La notas no se pueden promediar porque no se cargaron todas las notas,'}</li>
+                    <li><p>Nota 1: ${e['nota1'] || 'La nota aun no ha sido cargada.'}</p></li>
+                    <li><p>Nota 2: ${e['nota2'] || 'La nota aun no ha sido cargada.'}</p></li>
+                    <li><p>Nota Final: ${e['nota3'] || 'La nota aun no ha sido cargada.'}</p></li>
+                    <li><p>Nota Final (promedio): ${e['promedio'] || 'La notas no se pueden promediar porque no se cargaron todas las notas,'}</p></li>
                 </ul>
-                </p>
-                </p>
-                </p>
                 `
             })
         }
@@ -243,7 +208,6 @@ const apartado_estudiantes_logueados = (estudiante_iniciado) => {
 
 }
 
-
 const apartado_profesores_logueados = (profesor_iniciado) => {
     div_principal.innerHTML = `<h1>Bienvenid@ al apartado de profesores</h1>
     <h2>Selecciona una opcion</h2>
@@ -259,88 +223,103 @@ const apartado_profesores_logueados = (profesor_iniciado) => {
     estudiantes = JSON.parse(localStorage.getItem('estudiantes'))
 
     boton_cargar_notas.onclick = () => {
+        if (estudiantes.length == 0) {
 
-        div_principal.innerHTML = ''
-        console.log(profesor_iniciado)
-        for (let e = 0; e < estudiantes.length; e++) {
-            for (let j = 0; j < estudiantes[e]['cursos_inscriptos'].length; j++) {
-                if (estudiantes[e]['cursos_inscriptos'][j]['nombre'] == profesor_iniciado.curso) {
-                    div_principal.innerHTML +=
-                        `<h2>Ingrese la nota de ${estudiantes[e]['nombre']}</h2>
+            div_principal.innerHTML = ''
+            for (let e = 0; e < estudiantes.length; e++) {
+                for (let j = 0; j < estudiantes[e]['cursos_inscriptos'].length; j++) {
+                    if (estudiantes[e]['cursos_inscriptos'][j]['nombre'] == profesor_iniciado.curso) {
+                        div_principal.innerHTML +=
+                            `<h2>Ingrese la nota de ${estudiantes[e]['nombre']}</h2>
                     <label for="nota1">Nota 1</label><input type="number" name="nota1" class="nota1">
                     <label for="nota1">Nota 2</label><input type="number" name="nota2" class="nota2">
                     <label for="nota1">Nota 3</label><input type="number" name="nota3" class="nota3">`
+                    }
                 }
             }
-        }
-        div_principal.innerHTML += 
-        `<ul>
+            div_principal.innerHTML +=
+                `<ul>
         <li><button id="cargar_notas">Cargar</button></li>
         <li><button id="boton_volver">Volver</button></li>
         </ul>`
 
-        const cargar_notas = document.querySelector('#cargar_notas')
-        const boton_volver = document.querySelector('#boton_volver')
-        volver_al_inicio(boton_volver,div_principal)
+            const cargar_notas = document.querySelector('#cargar_notas')
+            const boton_volver = document.querySelector('#boton_volver')
+            volver_al_inicio(boton_volver, div_principal)
 
-        cargar_notas.onclick = () =>{
-            console.log()
-            const input_nota1 = document.querySelectorAll('.nota1')
-            const input_nota2 = document.querySelectorAll('.nota2')
-            const input_nota3 = document.querySelectorAll('.nota3')
-            
-            for (let e = 0; e < estudiantes.length; e++) {
-                for (let j = 0; j < estudiantes[e]['cursos_inscriptos'].length; j++) {
-                    if (estudiantes[e]['cursos_inscriptos'][j]['nombre'] == profesor_iniciado.curso) {
-                        
-                        estudiantes[e]['cursos_inscriptos'][j]['nota1'] = input_nota1[e].value
-                        estudiantes[e]['cursos_inscriptos'][j]['nota2'] = input_nota2[e].value
-                        estudiantes[e]['cursos_inscriptos'][j]['nota3'] = input_nota3[e].value
-                        estudiantes[e]['cursos_inscriptos'][j]['promedio'] = ((parseFloat(estudiantes[e]['cursos_inscriptos'][j]['nota1']) + parseFloat(estudiantes[e]['cursos_inscriptos'][j]['nota2']) + parseFloat(estudiantes[e]['cursos_inscriptos'][j]['nota3'])) / 3) || 'No se puede promediar porque faltan cargar notas.'
+            cargar_notas.onclick = () => {
+
+                const input_nota1 = document.querySelectorAll('.nota1')
+                const input_nota2 = document.querySelectorAll('.nota2')
+                const input_nota3 = document.querySelectorAll('.nota3')
+
+                for (let e = 0; e < estudiantes.length; e++) {
+                    for (let j = 0; j < estudiantes[e]['cursos_inscriptos'].length; j++) {
+                        if (estudiantes[e]['cursos_inscriptos'][j]['nombre'] == profesor_iniciado.curso) {
+
+                            estudiantes[e]['cursos_inscriptos'][j]['nota1'] = input_nota1[e].value
+                            estudiantes[e]['cursos_inscriptos'][j]['nota2'] = input_nota2[e].value
+                            estudiantes[e]['cursos_inscriptos'][j]['nota3'] = input_nota3[e].value
+                            estudiantes[e]['cursos_inscriptos'][j]['promedio'] = ((parseFloat(estudiantes[e]['cursos_inscriptos'][j]['nota1']) + parseFloat(estudiantes[e]['cursos_inscriptos'][j]['nota2']) + parseFloat(estudiantes[e]['cursos_inscriptos'][j]['nota3'])) / 3) || 'No se puede promediar porque faltan cargar notas.'
+                        }
                     }
                 }
+                localStorage.setItem('estudiantes', JSON.stringify(estudiantes))
+                alert('Notas cargadas')
+                recargar_pagina()
             }
-        localStorage.setItem('estudiantes',JSON.stringify(estudiantes))
-        alert('Notas cargadas')
-        recargar_pagina()
+        } else {
+            div_principal.innerHTML = ``
+            div_principal.innerHTML +=
+                `<h1>No hay estudiantes registrados aun.</h1>
+            <button id="boton_volver">Volver</button>`
+            const boton_volver = document.querySelector('#boton_volver')
+            volver_al_inicio(boton_volver, div_principal)
         }
 
-        
+
     }
 
     boton_ver_notas.onclick = () => {
+        if (estudiantes.length == 0) {
+            div_principal.innerHTML = ''
 
-        div_principal.innerHTML = ''
-        
-        for (let e = 0; e < estudiantes.length; e++) {
-            for (let j = 0; j < estudiantes[e]['cursos_inscriptos'].length; j++) {
-                if (estudiantes[e]['cursos_inscriptos'][j]['nombre'] == profesor_iniciado.curso) {
-                    
-                    div_principal.innerHTML +=
-                        `<h2>Las notas del estudiante: ${estudiantes[e]['nombre']}</h2>
-                        <ul>
-                            <li><p>Nota 1: ${estudiantes[e]['cursos_inscriptos'][j]['nota1']}</p></li>
-                            <li><p>Nota 2: ${estudiantes[e]['cursos_inscriptos'][j]['nota2']}</p></li>
-                            <li><p>Nota 3: ${estudiantes[e]['cursos_inscriptos'][j]['nota3']}</p></li>
+            for (let e = 0; e < estudiantes.length; e++) {
+                for (let j = 0; j < estudiantes[e]['cursos_inscriptos'].length; j++) {
+                    if (estudiantes[e]['cursos_inscriptos'][j]['nombre'] == profesor_iniciado.curso) {
 
-                            <li><p>Nota final (promedio): ${estudiantes[e]['cursos_inscriptos'][j]['promedio']}</p></li>
-                        </ul>`
+                        div_principal.innerHTML +=
+                            `<h2>Las notas del estudiante: ${estudiantes[e]['nombre']}</h2>
+                            <ul>
+                                <li><p>Nota 1: ${estudiantes[e]['cursos_inscriptos'][j]['nota1']}</p></li>
+                                <li><p>Nota 2: ${estudiantes[e]['cursos_inscriptos'][j]['nota2']}</p></li>
+                                <li><p>Nota 3: ${estudiantes[e]['cursos_inscriptos'][j]['nota3']}</p></li>
+    
+                                <li><p>Nota final (promedio): ${estudiantes[e]['cursos_inscriptos'][j]['promedio']}</p></li>
+                            </ul>`
+                    }
                 }
             }
+            div_principal.innerHTML += `<button id="boton_volver">Volver</button>`
+            const boton_volver = document.querySelector('#boton_volver')
+            volver_al_inicio(boton_volver, div_principal)
         }
-        div_principal.innerHTML += `<button id="boton_volver">Volver</button>`
-        const boton_volver = document.querySelector('#boton_volver')
-        volver_al_inicio(boton_volver,div_principal)
+        else {
+            div_principal.innerHTML = ``
+            div_principal.innerHTML +=
+                `<h1>No hay estudiantes registrados aun.</h1>
+            <button id="boton_volver">Volver</button>`
+            const boton_volver = document.querySelector('#boton_volver')
+            volver_al_inicio(boton_volver, div_principal)
+        }
+
     }
-    
     boton_cerrar_sesion.onclick = () => {
         localStorage.removeItem('profesor_iniciado')
         alert('Se ha cerrado la sesion.')
         recargar_pagina()
     }
 }
-
-
 
 const apartado_estudiantes_visitantes = () => {
     boton_estudiantes.onclick = () => {
@@ -416,7 +395,7 @@ const apartado_estudiantes_visitantes = () => {
                     if (estudiantes.some((i) => i['email'] == input_email.value)) {
                         alert('La direccion de correo electronico ya pertenece a otro usuario. Prueba con otro.')
                     } else {
-                        if (localStorage['estudiantes']){
+                        if (localStorage['estudiantes']) {
                             estudiantes = JSON.parse(localStorage.getItem('estudiantes'))
                         }
                         const user = new Estudiante(input_nombre.value, input_apellido.value, input_dni.value, input_email.value, input_password.value, [])
@@ -460,8 +439,6 @@ const apartado_profesores_visitantes = () => {
 
     }
 }
-
-
 
 class Estudiante extends Profesor {
 
