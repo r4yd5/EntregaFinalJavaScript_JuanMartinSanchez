@@ -1,0 +1,30 @@
+[   
+    { 
+        "nombre": "JavaScript",
+        "img": "javascript.png" 
+    },
+    { 
+        "nombre": "Python",
+        "img": "python.png" 
+    },
+    { 
+        "nombre": "Django", 
+        "img": "django.png" 
+    },
+    { 
+        "nombre": "NodeJs", 
+        "img": "nodejs.png" 
+    },
+    { 
+        "nombre": "React", 
+        "img": "react.webp" 
+    },
+    { 
+        "nombre": "Java", 
+        "img": "java.jpg"
+    },
+    { 
+        "nombre": "CSS", 
+        "img": "css.jpg" 
+    }
+]                            

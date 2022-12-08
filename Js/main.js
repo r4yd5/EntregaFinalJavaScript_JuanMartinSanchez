@@ -1,13 +1,4 @@
-class Profesor {
-    constructor(nombre, apellido, email, password, dni, curso) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.password = password;
-        this.dni = dni;
-        this.curso = curso;
-    }
-}
+
 
 let estudiantes = [];
 
@@ -221,62 +212,9 @@ const apartado_profesores_logueados = (profesor_iniciado) => {
     const boton_ver_notas = document.querySelector('#boton_ver_notas')
     const boton_cerrar_sesion = document.querySelector('#boton_cerrar_sesion')
     estudiantes = JSON.parse(localStorage.getItem('estudiantes'))
-
+    
     boton_cargar_notas.onclick = () => {
-        if (estudiantes.length == 0) {
-
-            div_principal.innerHTML = ''
-            for (let e = 0; e < estudiantes.length; e++) {
-                for (let j = 0; j < estudiantes[e]['cursos_inscriptos'].length; j++) {
-                    if (estudiantes[e]['cursos_inscriptos'][j]['nombre'] == profesor_iniciado.curso) {
-                        div_principal.innerHTML +=
-                            `<h2>Ingrese la nota de ${estudiantes[e]['nombre']}</h2>
-                    <label for="nota1">Nota 1</label><input type="number" name="nota1" class="nota1">
-                    <label for="nota1">Nota 2</label><input type="number" name="nota2" class="nota2">
-                    <label for="nota1">Nota 3</label><input type="number" name="nota3" class="nota3">`
-                    }
-                }
-            }
-            div_principal.innerHTML +=
-                `<ul>
-        <li><button id="cargar_notas">Cargar</button></li>
-        <li><button id="boton_volver">Volver</button></li>
-        </ul>`
-
-            const cargar_notas = document.querySelector('#cargar_notas')
-            const boton_volver = document.querySelector('#boton_volver')
-            volver_al_inicio(boton_volver, div_principal)
-
-            cargar_notas.onclick = () => {
-
-                const input_nota1 = document.querySelectorAll('.nota1')
-                const input_nota2 = document.querySelectorAll('.nota2')
-                const input_nota3 = document.querySelectorAll('.nota3')
-
-                for (let e = 0; e < estudiantes.length; e++) {
-                    for (let j = 0; j < estudiantes[e]['cursos_inscriptos'].length; j++) {
-                        if (estudiantes[e]['cursos_inscriptos'][j]['nombre'] == profesor_iniciado.curso) {
-
-                            estudiantes[e]['cursos_inscriptos'][j]['nota1'] = input_nota1[e].value
-                            estudiantes[e]['cursos_inscriptos'][j]['nota2'] = input_nota2[e].value
-                            estudiantes[e]['cursos_inscriptos'][j]['nota3'] = input_nota3[e].value
-                            estudiantes[e]['cursos_inscriptos'][j]['promedio'] = ((parseFloat(estudiantes[e]['cursos_inscriptos'][j]['nota1']) + parseFloat(estudiantes[e]['cursos_inscriptos'][j]['nota2']) + parseFloat(estudiantes[e]['cursos_inscriptos'][j]['nota3'])) / 3) || 'No se puede promediar porque faltan cargar notas.'
-                        }
-                    }
-                }
-                localStorage.setItem('estudiantes', JSON.stringify(estudiantes))
-                alert('Notas cargadas')
-                recargar_pagina()
-            }
-        } else {
-            div_principal.innerHTML = ``
-            div_principal.innerHTML +=
-                `<h1>No hay estudiantes registrados aun.</h1>
-            <button id="boton_volver">Volver</button>`
-            const boton_volver = document.querySelector('#boton_volver')
-            volver_al_inicio(boton_volver, div_principal)
-        }
-
+        profesor_iniciado.cargar_notas(div_principal,estudiantes)
 
     }
 
