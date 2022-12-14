@@ -1,1 +1,1 @@
-Tercer entrega del proyecto final JavaScript por Juan Martin Sanchez
+Entrega final del proyecto de JavaScript por Juan Martin Sanchez
