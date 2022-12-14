@@ -21,68 +21,73 @@ class Profesor {
     cargar_notas(div, array_estudiantes, funcion = null) {
         div.innerHTML = ''
         let flag = false
-        if (array_estudiantes.length !== 0) {
-            
-            for (let i = 0; i < array_estudiantes.length; i++) {
-                for (const curso of array_estudiantes[i]['cursos_inscriptos']) {
-                    if (curso['nombre'] == this.curso && funcion == null) {
+        if (localStorage.getItem('estudiantes')) {
 
-                        div.innerHTML +=
-                            `<h2>Ingrese la nota de ${array_estudiantes[i]['nombre']}</h2>
-                        <label for="nota1">Nota 1</label><input type="number" name="nota1" class="nota1">
-                        <label for="nota1">Nota 2</label><input type="number" name="nota2" class="nota2">
-                        <label for="nota1">Nota 3</label><input type="number" name="nota3" class="nota3">`
-                        flag = true
-
-                    } if (funcion != null) {
-                        funcion(i, curso, div, array_estudiantes)
-                        flag = 'ver_notas'
-                    }
-                }
-            }
-            if (flag == true) {
+            if (array_estudiantes.length !== 0) {
                 
-                div.innerHTML +=
-                    `<button id="cargar_notas">Cargar</button>
-                <button id="boton_volver">Volver</button>`
-                const cargar_notas = document.querySelector('#cargar_notas')
-                const boton_volver = document.querySelector('#boton_volver')
-                volver_al_inicio(boton_volver, div)
-                cargar_notas.onclick = () => {
-                    debugger
-
-                    const input_nota1 = document.querySelectorAll('.nota1')
-                    const input_nota2 = document.querySelectorAll('.nota2')
-                    const input_nota3 = document.querySelectorAll('.nota3')
-
-                    for (let i = 0; i < array_estudiantes.length; i++) {
-                        for (const curso of array_estudiantes[i]['cursos_inscriptos']) {
-                            if (curso['nombre'] == this.curso) {
-                                curso['nota1'] = input_nota1[i].value
-                                curso['nota2'] = input_nota2[i].value
-                                curso['nota3'] = input_nota3[i].value
-                                curso['promedio'] = ((parseFloat(curso['nota1']) + parseFloat(curso['nota2']) + parseFloat(curso['nota3'])) / 3)
-                            }
+                for (let i = 0; i < array_estudiantes.length; i++) {
+                    for (const curso of array_estudiantes[i]['cursos_inscriptos']) {
+                        if (curso['nombre'] == this.curso && funcion == null) {
+    
+                            div.innerHTML +=
+                                `<h2>Ingrese la nota de ${array_estudiantes[i]['nombre']}</h2>
+                            <label for="nota1">Nota 1</label><input type="number" name="nota1" class="nota1">
+                            <label for="nota1">Nota 2</label><input type="number" name="nota2" class="nota2">
+                            <label for="nota1">Nota 3</label><input type="number" name="nota3" class="nota3">`
+                            flag = true
+    
+                        } if (funcion != null) {
+                            funcion(i, curso, div, array_estudiantes)
+                            flag = 'ver_notas'
                         }
                     }
-                    localStorage.setItem('estudiantes', JSON.stringify(array_estudiantes))
-                    Swal.fire({
-                        text: 'Notas cargadas.',
-                        icon: 'success',
-                        confirmButtonText: 'Confirmar'
-                    })
-                        .then(function () {
-                            location.reload()
-                        })
                 }
-            } else if (flag == 'ver_notas') {
-                div.innerHTML += `<button id="boton_volver">Volver</button>`
-                const boton_volver = document.querySelector('#boton_volver')
-                volver_al_inicio(boton_volver, div)
+                if (flag == true) {
+                    
+                    div.innerHTML +=
+                        `<button id="cargar_notas">Cargar</button>
+                    <button id="boton_volver">Volver</button>`
+                    const cargar_notas = document.querySelector('#cargar_notas')
+                    const boton_volver = document.querySelector('#boton_volver')
+                    volver_al_inicio(boton_volver, div)
+                    cargar_notas.onclick = () => {
+                        debugger
+    
+                        const input_nota1 = document.querySelectorAll('.nota1')
+                        const input_nota2 = document.querySelectorAll('.nota2')
+                        const input_nota3 = document.querySelectorAll('.nota3')
+    
+                        for (let i = 0; i < array_estudiantes.length; i++) {
+                            for (const curso of array_estudiantes[i]['cursos_inscriptos']) {
+                                if (curso['nombre'] == this.curso) {
+                                    curso['nota1'] = input_nota1[i].value
+                                    curso['nota2'] = input_nota2[i].value
+                                    curso['nota3'] = input_nota3[i].value
+                                    curso['promedio'] = ((parseFloat(curso['nota1']) + parseFloat(curso['nota2']) + parseFloat(curso['nota3'])) / 3)
+                                }
+                            }
+                        }
+                        localStorage.setItem('estudiantes', JSON.stringify(array_estudiantes))
+                        Swal.fire({
+                            text: 'Notas cargadas.',
+                            icon: 'success',
+                            confirmButtonText: 'Confirmar'
+                        })
+                            .then(function () {
+                                location.reload()
+                            })
+                    }
+                } else if (flag == 'ver_notas') {
+                    div.innerHTML += `<button id="boton_volver">Volver</button>`
+                    const boton_volver = document.querySelector('#boton_volver')
+                    volver_al_inicio(boton_volver, div)
+                } else {
+                    this.no_estudiantes(div)
+                }
             } else {
                 this.no_estudiantes(div)
             }
-        } else {
+        } else{
             this.no_estudiantes(div)
         }
 
@@ -95,9 +100,9 @@ class Profesor {
             div.innerHTML +=
                 `<h2>Las notas del estudiante: ${array_estudiantes[i]['nombre']}</h2>
             <ul>
-                <li><p>Nota 1: ${curso['nota1'] || 'Las notas no han sido cargadas aun'} </p></li>
-                <li><p>Nota 2: ${curso['nota2'] || 'Las notas no han sido cargadas aun'} </p></li>
-                <li><p>Nota 3: ${curso['nota3'] || 'Las notas no han sido cargadas aun'}</p></li>
+                <li><p>Nota 1: ${curso['nota1'] || 'Las notas no han sido cargadas aun.'} </p></li>
+                <li><p>Nota 2: ${curso['nota2'] || 'Las notas no han sido cargadas aun.'} </p></li>
+                <li><p>Nota 3: ${curso['nota3'] || 'Las notas no han sido cargadas aun.'}</p></li>
                 <li><p>Nota final (promedio): ${curso['promedio'] || 'No se puede promediar porque faltan cargar notas.'} </p></li>
             </ul>`
         }
