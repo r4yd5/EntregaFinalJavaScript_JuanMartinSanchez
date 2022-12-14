@@ -3,7 +3,7 @@
         "nombre": "Maury",
         "apellido": "Wadforth",
         "email": "profesor1@gmail.com",
-        "contraseña": "pdYjWc",
+        "password": "pdYjWc",
         "dni": "11111111",
         "curso": "JavaScript"
     },
@@ -11,7 +11,7 @@
         "nombre": "Evelyn",
         "apellido": "Maddock",
         "email": "profesor2@gmail.com",
-        "contraseña": "1Uy7shv6",
+        "password": "1Uy7shv6",
         "dni": "22222222",
         "curso": "Python"
     },
@@ -19,7 +19,7 @@
         "nombre": "Viviana",
         "apellido": "Armytage",
         "email": "profesor3@gmail.com",
-        "contraseña": "ZhKcibBT8ju",
+        "password": "ZhKcibBT8ju",
         "dni": "33333333",
         "curso": "CSS"
     },
@@ -27,7 +27,7 @@
         "nombre": "Alphonse",
         "apellido": "Fass",
         "email": "profesor4@gmail.com",
-        "contraseña": "FqocJGBy",
+        "password": "FqocJGBy",
         "dni": "44444444",
         "curso": "Django"
     },
@@ -35,7 +35,7 @@
         "nombre": "Pen",
         "apellido": "Gresswood",
         "email": "profesor5@gmail.com",
-        "contraseña": "sQJhqHeMQrq3",
+        "password": "sQJhqHeMQrq3",
         "dni": "55555555",
         "curso": "Java"
     },
@@ -43,7 +43,7 @@
         "nombre": "Sherm",
         "apellido": "Terne",
         "email": "profesor6@gmail.com",
-        "contraseña": "NkE3fn59LuQn",
+        "password": "NkE3fn59LuQn",
         "dni": "66666666",
         "curso": "React"
     },
@@ -51,7 +51,7 @@
         "nombre": "Nolana",
         "apellido": "MacRedmond",
         "email": "profesor7@gmail.com",
-        "contraseña": "aSnxjgc",
+        "password": "aSnxjgc",
         "dni": "77777777",
         "curso": "NodeJs"
     }

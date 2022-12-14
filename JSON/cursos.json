@@ -1,30 +1,37 @@
-[   
-    { 
+[
+    {
         "nombre": "JavaScript",
-        "img": "javascript.png" 
+        "img": "javascript.png",
+        "profesor": "Maury Wadforth"
     },
-    { 
+    {
         "nombre": "Python",
-        "img": "python.png" 
+        "img": "python.png",
+        "profesor": "Evelyn Maddock"
     },
-    { 
-        "nombre": "Django", 
-        "img": "django.png" 
+    {
+        "nombre": "Django",
+        "img": "django.png",
+        "profesor": "Viviana Armytage"
     },
-    { 
-        "nombre": "NodeJs", 
-        "img": "nodejs.png" 
+    {
+        "nombre": "NodeJs",
+        "img": "nodejs.png",
+        "profesor": "Alphonse Fass"
     },
-    { 
-        "nombre": "React", 
-        "img": "react.webp" 
+    {
+        "nombre": "React",
+        "img": "react.webp",
+        "profesor": "Pen Gresswood"
     },
-    { 
-        "nombre": "Java", 
-        "img": "java.jpg"
+    {
+        "nombre": "Java",
+        "img": "java.jpg",
+        "profesor": "Sherm Terne"
     },
-    { 
-        "nombre": "CSS", 
-        "img": "css.jpg" 
+    {
+        "nombre": "CSS",
+        "img": "css.jpg",
+        "profesor": "Nolana MacRedmond"
     }
-]                            
+]
